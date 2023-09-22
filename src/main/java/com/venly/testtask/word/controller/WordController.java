@@ -1,9 +1,12 @@
 package com.venly.testtask.word.controller;
 
+import java.util.List;
+
 import com.venly.testtask.word.dto.WordDto;
 import com.venly.testtask.word.service.WordService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,12 @@ public class WordController {
 
   public WordController(WordService wordService) {
     this.wordService = wordService;
+  }
+
+  @GetMapping
+  @ResponseStatus(value = HttpStatus.OK)
+  public List<WordDto> findAllWords() {
+    return wordService.getAllWords();
   }
 
   @PostMapping

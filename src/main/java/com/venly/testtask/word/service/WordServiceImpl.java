@@ -1,5 +1,7 @@
 package com.venly.testtask.word.service;
 
+import java.util.List;
+
 import com.venly.testtask.word.dto.WordDto;
 import com.venly.testtask.word.entity.Word;
 import com.venly.testtask.word.mapper.WordMapper;
@@ -23,5 +25,11 @@ public class WordServiceImpl implements WordService {
     Word word = wordMapper.wordDtoToWord(wordDto);
     word = wordRepository.save(word);
     return wordMapper.wordToWordDto(word);
+  }
+
+  @Override
+  public List<WordDto> getAllWords() {
+    List<Word> words = wordRepository.findAll();
+    return wordMapper.wordsToWordDtos(words);
   }
 }
