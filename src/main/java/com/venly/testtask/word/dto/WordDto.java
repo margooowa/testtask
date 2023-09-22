@@ -1,6 +1,7 @@
 package com.venly.testtask.word.dto;
 
 import com.venly.testtask.word.entity.Relation;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

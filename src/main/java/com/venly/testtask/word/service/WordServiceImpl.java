@@ -3,6 +3,7 @@ package com.venly.testtask.word.service;
 import java.util.List;
 
 import com.venly.testtask.word.dto.WordDto;
+import com.venly.testtask.word.entity.Relation;
 import com.venly.testtask.word.entity.Word;
 import com.venly.testtask.word.mapper.WordMapper;
 import com.venly.testtask.word.repository.WordRepository;
@@ -28,8 +29,8 @@ public class WordServiceImpl implements WordService {
   }
 
   @Override
-  public List<WordDto> getAllWords() {
-    List<Word> words = wordRepository.findAll();
+  public List<WordDto> findWords(Relation relation) {
+    List<Word> words = wordRepository.findByRelation(relation);
     return wordMapper.wordsToWordDtos(words);
   }
 }
