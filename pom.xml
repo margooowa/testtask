@@ -54,7 +54,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
-      <scope>provided</scope>
       <version>${org.projectlombok.version}</version>
     </dependency>
     <dependency>
@@ -102,6 +101,9 @@
             </path>
             <!-- other annotation processors -->
           </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amapstruct.defaultComponentModel=spring</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
     </plugins>

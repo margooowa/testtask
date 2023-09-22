@@ -1,13 +1,15 @@
 package com.venly.testtask.word.dto;
 
 import com.venly.testtask.word.entity.Relation;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -15,17 +17,20 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class WordDto {
 
   private Long id;
 
-  @NonNull
+  @NotNull(message = "firstWord cannot be null")
+  @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
   private String firstWord;
 
-  @NonNull
+  @NotNull(message = "secondWord cannot be null")
+  @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only alphabets and spaces are allowed")
   private String secondWord;
 
-  @NonNull
+  @NotNull(message = "relation cannot be null")
   private Relation relation;
 
   private Inversed inversed;
