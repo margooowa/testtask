@@ -2,6 +2,7 @@ package com.venly.testtask.word.service;
 
 import java.util.List;
 
+import com.venly.testtask.word.dto.Inversed;
 import com.venly.testtask.word.dto.WordDto;
 import com.venly.testtask.word.entity.Relation;
 import com.venly.testtask.word.entity.Word;
@@ -29,8 +30,24 @@ public class WordServiceImpl implements WordService {
   }
 
   @Override
-  public List<WordDto> findWords(Relation relation) {
+  public List<WordDto> findWords(Relation relation, Boolean inverse) {
     List<Word> words = wordRepository.findByRelation(relation);
-    return wordMapper.wordsToWordDtos(words);
+    List<WordDto> wordDtos = wordMapper.wordsToWordDtos(words);
+    if (inverse) {
+      this.inverseList(wordDtos);
+    }
+    return wordDtos;
+  }
+
+  private void inverseList(List<WordDto> list) {
+    list.forEach(word -> {
+      word.setInversed(Inversed.NO);
+      list.add(WordDto.builder()
+          .firstWord(word.getSecondWord())
+          .secondWord(word.getFirstWord())
+          .relation(word.getRelation())
+          .inversed(Inversed.YES)
+          .build());
+    });
   }
 }

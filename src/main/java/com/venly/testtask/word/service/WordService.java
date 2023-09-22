@@ -8,5 +8,5 @@ import com.venly.testtask.word.entity.Relation;
 public interface WordService {
 
   WordDto createWord(WordDto wordDto);
-  List<WordDto> findWords(Relation relation);
+  List<WordDto> findWords(Relation relation, Boolean invers);
 }

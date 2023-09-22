@@ -27,8 +27,9 @@ public class WordController {
 
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
-  public List<WordDto> findWords(@RequestParam("relation") Relation relation) {
-    return wordService.findWords(relation);
+  public List<WordDto> findWords(@RequestParam("relation") Relation relation,
+      @RequestParam(value = "inverse", required = false) Boolean inverse) {
+    return wordService.findWords(relation, inverse);
   }
 
   @PostMapping
