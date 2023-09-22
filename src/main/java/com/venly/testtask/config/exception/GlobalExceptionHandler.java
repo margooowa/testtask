@@ -35,4 +35,14 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your data is not valid: " + ex.getMessage());
   }
+
+  @ExceptionHandler(AnotherRelationException.class)
+  public ResponseEntity<String> handleAnotherRelationException(AnotherRelationException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
+
+  @ExceptionHandler(InverseException.class)
+  public ResponseEntity<String> handleInverseException(InverseException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
 }

@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface WordRepository extends JpaRepository<Word, Long> {
 
   List<Word> findByRelation(Relation relation);
+
+  Word findByFirstWordAndSecondWord(String firstWord, String secondWord);
 }
 

@@ -3,6 +3,7 @@ package com.venly.testtask.word.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.venly.testtask.config.exception.AnotherRelationException;
 import com.venly.testtask.word.dto.Inversed;
 import com.venly.testtask.word.dto.WordDto;
 import com.venly.testtask.word.entity.Relation;
@@ -25,6 +26,7 @@ public class WordServiceImpl implements WordService {
 
   @Override
   public WordDto createWord(WordDto wordDto) {
+    validation(wordDto);
     Word word = wordMapper.wordDtoToWord(wordDto);
     word = wordRepository.save(word);
     return wordMapper.wordToWordDto(word);
@@ -34,7 +36,7 @@ public class WordServiceImpl implements WordService {
   public List<WordDto> findWords(Relation relation, Boolean inverse) {
     List<Word> words = wordRepository.findByRelation(relation);
     List<WordDto> wordDtos = wordMapper.wordsToWordDtos(words);
-    if (inverse!=null && inverse) {
+    if (inverse != null && inverse) {
       this.inverseList(wordDtos);
     }
     return wordDtos;
@@ -52,5 +54,24 @@ public class WordServiceImpl implements WordService {
           .build());
     });
     list.addAll(inversed);
+  }
+
+  private void validation(WordDto dto) {
+    this.validationForAnotherRelation(dto);
+    this.validationForInverse(dto);
+  }
+
+  private void validationForAnotherRelation(WordDto dto) {
+    Word word = wordRepository.findByFirstWordAndSecondWord(dto.getFirstWord(), dto.getSecondWord());
+    if (word != null && dto.getRelation() != word.getRelation()) {
+      throw new AnotherRelationException();
+    }
+  }
+
+  private void validationForInverse(WordDto dto) {
+    Word word = wordRepository.findByFirstWordAndSecondWord(dto.getSecondWord(), dto.getFirstWord());
+    if (word != null && dto.getRelation() == word.getRelation()) {
+      throw new AnotherRelationException();
+    }
   }
 }
